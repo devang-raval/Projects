@@ -12,6 +12,10 @@ First, we'll load the banking dataset and look at the first few rows of data. Th
  
 <br>
 
+<img align="center" alt="df.head()" src="https://github.com/devang-raval/Projects/blob/main/Data%20Science/Finance/Debt%20Analysis/Visualization/df_head.png" /> <br>
+
+<br>
+
 ## 2. Graphical exploratory data analysis
 
 The bank has implemented different recovery strategies at different thresholds ($1000, $2000, $3000 and $5000) where the greater the Expected Recovery Amount, the more effort the bank puts into contacting the customer. Zeroing in on the first transition (between Level 0 and Level 1) means we are focused on the population with Expected Recovery Amounts between $0 and $2000 where the transition between Levels occurred at $1000. We know that the customers in Level 1 (expected recovery amounts between $1001 and $2000) received more attention from the bank and, by definition, they had higher Expected Recovery Amounts than the customers in Level 0 (between $1 and $1000).
@@ -25,6 +29,12 @@ Here's a quick summary of the Levels and thresholds again:
 <br>
 
 A key question is whether there are other factors besides Expected Recovery Amount that also varied systematically across the $1000 threshold. For example, does the customer age show a jump (discontinuity) at the $1000 threshold or does that age vary smoothly? We can examine this by first making a scatter plot of the age as a function of Expected Recovery Amount for a small window of Expected Recovery Amount, $0 to $2000. This range covers Levels 0 and 1.
+
+<br>
+
+<img align="center" alt="Scatter plot of Age vs. Expected Recovery Amount" src="https://github.com/devang-raval/Projects/blob/main/Data%20Science/Finance/Debt%20Analysis/Visualization/age%20vs%20expected%20recovery%20scatter%20plot.png" />
+
+<br>
 
 ## 3. Statistical test: age vs. expected recovery amount
 
@@ -56,6 +66,10 @@ A first step in examining the relationship between the actual recovery amount an
 
 <br>
 
+<img align="center" alt="Scatter plot of Age vs. Expected Recovery Amount" src="https://github.com/devang-raval/Projects/blob/main/Data%20Science/Finance/Debt%20Analysis/Visualization/actually%20vs%20expected%20recovery%20scatterplot.png" />
+
+<br>
+
 ## 6. Statistical analysis: recovery amount
 
 Just as we did with age, we can perform statistical tests to see if the actual recovery amount has a discontinuity above the $1000 threshold. We are going to do this for two different windows of the expected recovery amount $900 to $1100 and for a narrow range of $950 to $1050 to see if our results are consistent.
@@ -73,6 +87,10 @@ We now want to take a regression-based approach to estimate the impact of the pr
 The first model predicts the actual recovery amount (outcome or dependent variable) as a function of the expected recovery amount (input or independent variable). We expect that there will be a strong positive relationship between these two variables.
 
 We will examine the adjusted R-squared to see the percent of variance that is explained by the model. In this model, we are not trying to represent the threshold but simply trying to see how the variable used for assigning the customers (expected recovery amount) relates to the outcome variable (actual recovery amount).
+
+<br>
+
+<img align="center" alt="Regression modeling : No Threshold" src="https://github.com/devang-raval/Projects/blob/main/Data%20Science/Finance/Debt%20Analysis/Visualization/OLS%20regression%20results_%20no%20threshold.png" />
 
 <br>
 
@@ -96,6 +114,10 @@ If the higher recovery strategy did help recovery more money, then the regressio
 
 <br>
 
+<img align="center" alt="Regression modeling : True Threshold" src="https://github.com/devang-raval/Projects/blob/main/Data%20Science/Finance/Debt%20Analysis/Visualization/OLS%20regression%20results_%20adding%20true%20threshold.png" />
+
+<br>
+
 Warnings: <br>
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified. <br>
 [2] The condition number is large, 3.37e+04. This might indicate that there are strong multicollinearity or other numerical problems.
@@ -109,6 +131,10 @@ The regression coefficient for the true threshold was statistically significant 
 Before showing this to our managers, we want to convince ourselves that this result wasn't due just to us choosing a window of $900 to $1100 for the expected recovery amount. If the higher recovery strategy really had an impact of an extra few hundred dollars, then we should see a similar regression coefficient if we choose a slightly bigger or a slightly smaller window for the expected recovery amount. Let's repeat this analysis for the window of expected recovery amount from $950 to $1050 to see if we get similar results.
 
 The answer? Whether we use a wide window ($900 to $1100) or a narrower window ($950 to $1050), the incremental recovery amount at the higher recovery strategy is much greater than the $50 per customer it costs for the higher recovery strategy. So we can say that the higher recovery strategy is worth the extra $50 per customer that the bank is spending.
+
+<br>
+
+<img align="center" alt="Regression modeling : Adjusting the window" src="https://github.com/devang-raval/Projects/blob/main/Data%20Science/Finance/Debt%20Analysis/Visualization/OLS%20regression%20results_%20adjusting%20the%20window.png" />
 
 <br>
 
